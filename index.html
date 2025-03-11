@@ -59,7 +59,7 @@
       position: relative;
       width: 100%;
       max-width: 900px;
-      height: calc(100vh - var(--container-padding) * 2 - 60px);
+      height: calc(100vh - 2rem);
       background: rgba(26, 26, 26, 0.95);
       border: 1px solid var(--primary-color);
       border-radius: 16px;
@@ -180,6 +180,7 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      min-height: 0;
     }
 
     .welcome-message {
@@ -628,19 +629,16 @@
       :root {
         --message-max-width: 90%;
         --message-spacing: 1rem;
-        --container-padding: 1.5rem;
+        --container-padding: 1rem;
       }
 
       .app-container {
         padding: var(--container-padding);
       }
 
-      .chat-container, .login-container, .profile-container {
-        border-radius: 12px;
-      }
-
       .chat-container {
-        height: calc(100vh - var(--container-padding) * 2 - 60px);
+        height: calc(100vh - 2rem);
+        margin: 1rem;
       }
 
       .chat-header {
@@ -674,7 +672,7 @@
       :root {
         --message-max-width: 95%;
         --message-spacing: 0.75rem;
-        --container-padding: 0.75rem;
+        --container-padding: 0.5rem;
       }
 
       .app-container {
@@ -682,8 +680,9 @@
       }
 
       .chat-container {
-        height: calc(100vh - var(--container-padding) * 2 - 60px);
-        border-radius: 8px;
+        height: calc(100vh - 1rem);
+        margin: 0.5rem;
+        border-radius: 12px;
       }
 
       .power-circle {
@@ -703,6 +702,10 @@
         padding: 0.875rem 1rem;
         font-size: 0.95rem;
       }
+
+      .chat-box {
+        padding: 0.5rem;
+      }
     }
 
     @media (max-height: 600px) {
@@ -711,7 +714,7 @@
       }
 
       .chat-container {
-        height: calc(100vh - var(--container-padding) * 2 - 60px);
+        height: calc(100vh - 1rem);
       }
 
       .chat-header {
@@ -885,7 +888,7 @@
       let retryCount = 0;
       const maxRetries = 3;
       let isLoading = false;
-      let isWelcomeMessageRemoved = false; // Track if the welcome message has been removed
+      let isWelcomeMessageRemoved = false;
 
       async function fetchFirebaseConfig() {
         try {
@@ -932,7 +935,8 @@
           currentUser = user;
           console.log("User signed in:", user);
           loginContainer.style.display = 'none';
-          chatContainer.style.display = 'block';
+          profileContainer.style.display = 'none';
+          chatContainer.style.display = 'flex';
           userInput.disabled = false;
           sendButton.disabled = false;
 
@@ -965,7 +969,7 @@
         signInBtn.disabled = true;
         signInBtn.classList.add('loading');
         const originalBtnContent = signInBtn.innerHTML;
-        signInBtn.innerHTML = '';
+         signInBtn.innerHTML = '';
         statusEl.innerText = "Signing in...";
 
         try {
@@ -1101,16 +1105,20 @@
         messageElement.classList.add('message', sender);
         messageElement.textContent = message;
 
-        // Remove the welcome message only once
         if (!isWelcomeMessageRemoved) {
           const welcomeMessage = chatBox.querySelector('.welcome-message');
-          if (welcomeMessage) welcomeMessage.remove();
-          isWelcomeMessageRemoved = true;
+          if (welcomeMessage) {
+            welcomeMessage.remove();
+            isWelcomeMessageRemoved = true;
+          }
         }
 
         messageGroup.appendChild(messageElement);
         chatBox.appendChild(messageGroup);
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the latest message
+        
+        requestAnimationFrame(() => {
+          chatBox.scrollTop = chatBox.scrollHeight;
+        });
       }
 
       function setLoading(loading) {
