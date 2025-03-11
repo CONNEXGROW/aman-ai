@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMessageEl.innerHTML = `
           <div class="error-message">
             Unable to connect to the authentication server.<br>
-    
+            
           </div>
         `;
         signInBtn.disabled = true;
@@ -1016,7 +1016,9 @@ document.addEventListener('DOMContentLoaded', () => {
         prompt: 'select_account'
       });
 
-      
+      // Use signInWithRedirect instead of popup if popup is problematic
+      // Uncomment the next line and comment out the signInWithPopup if needed
+      // await firebase.auth().signInWithRedirect(provider);
 
       // Sign in with popup
       const result = await firebase.auth().signInWithPopup(provider);
@@ -1027,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Verify token with backend
       try {
-        const response = await fetch("http://localhost:5000/verify-token", {
+        const response = await fetch("https://ai-givp.onrender.com/verify-token", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ idToken }),
