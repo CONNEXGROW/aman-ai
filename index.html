@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>JARVIS AM.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnexGrow</title>
   <style>
     :root {
-      --primary-color: #0056b3;
-      --secondary-color: #f1f1f1;
-      --background-color: #ffffff;
-      --text-primary: #333333;
-      --text-secondary: #767676;
-      --border-color: #dddddd;
+      --primary-color: #1db954;
+      --secondary-color: #2c2c2c;
+      --background-color: #1e1e1e;
+      --text-primary: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --border-color: #444444;
       --animation-timing: 0.3s;
       --message-max-width: 85%;
       --message-spacing: 1.5rem;
@@ -22,7 +22,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -30,56 +29,51 @@
       background-color: var(--background-color);
       color: var(--text-primary);
       line-height: 1.5;
-      overflow: hidden;
       height: 100vh;
       width: 100vw;
-    }
-
-    .app-container {
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 900px;
       padding: var(--container-padding);
     }
 
-    .chat-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      height: calc(100vh - 2rem);
-      background: #ffffff;
+    .chat-container, .login-container, .profile-container {
+      background: var(--secondary-color);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      display: none;
-      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       overflow: hidden;
+      display: none;
+    }
+
+    .chat-container {
+      height: calc(100vh - 4rem);
+      display: flex;
+      flex-direction: column;
     }
 
     .chat-header {
       padding: 1.5rem;
       border-bottom: 1px solid var(--border-color);
-    }
-
-    .header-content {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1rem;
     }
 
-    .jarvis-logo {
+    .jarvis-logo img {
       width: 40px;
       height: 40px;
-      flex-shrink: 0;
+      border-radius: 50%;
     }
 
     .header-info h1 {
       font-size: 1.5rem;
       color: var(--primary-color);
-      margin-bottom: 0.5rem;
     }
 
     .status-container {
@@ -99,19 +93,16 @@
       flex: 1;
       padding: var(--message-spacing);
       overflow-y: auto;
-      scroll-behavior: smooth;
-      position: relative;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      min-height: 0;
     }
 
     .welcome-message {
       text-align: center;
       margin: 2rem 0;
       padding: 2rem;
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(29, 185, 84, 0.1);
       border-radius: 12px;
       border: 1px solid var(--border-color);
     }
@@ -132,11 +123,9 @@
       gap: 0.25rem;
       width: 100%;
       padding: 0.5rem var(--message-spacing);
-      position: relative;
     }
 
     .message {
-      position: relative;
       padding: 1rem 1.25rem;
       border-radius: 12px;
       font-size: 1rem;
@@ -149,60 +138,33 @@
     }
 
     .user {
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(29, 185, 84, 0.1);
       margin-left: auto;
       border-top-right-radius: 4px;
       text-align: right;
     }
 
     .bot {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.1);
       margin-right: auto;
       border-top-left-radius: 4px;
       text-align: left;
     }
 
-    .message::before {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 0;
-      border: 8px solid transparent;
-      top: -1px;
-    }
-
-    .user::before {
-      right: -8px;
-      border-left-color: var(--border-color);
-      border-top-color: var(--border-color);
-    }
-
-    .bot::before {
-      left: -8px;
-      border-right-color: var(--border-color);
-      border-top-color: var(--border-color);
-    }
-
     .input-container {
       padding: 1.5rem;
-      background: #f9f9f9;
+      background: var(--secondary-color);
       border-top: 1px solid var(--border-color);
       display: flex;
       gap: 1rem;
     }
 
-    .input-wrapper {
-      position: relative;
-      flex: 1;
-    }
-
     #user-input {
-      width: 100%;
+      flex: 1;
       padding: 1rem;
-      background: #ffffff;
+      background: var(--background-color);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      color: var(--text-primary);
       font-family: inherit;
       font-size: 1rem;
       outline: none;
@@ -210,14 +172,14 @@
       resize: none;
       min-height: 50px;
       max-height: 150px;
+      color: var(--text-primary);
     }
 
     #user-input:focus {
-      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+      box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
     }
 
     #send-button {
-      position: relative;
       width: 50px;
       height: 50px;
       border: none;
@@ -229,22 +191,14 @@
       align-items: center;
       justify-content: center;
       transition: all var(--animation-timing);
-      overflow: hidden;
-      flex-shrink: 0;
     }
 
     #send-button:hover {
-      background: #004080;
+      background: #1aa34a;
     }
 
     #send-button:active {
       transform: scale(0.95);
-    }
-
-    #send-button svg {
-      width: 24px;
-      height: 24px;
-      z-index: 1;
     }
 
     .loading {
@@ -269,59 +223,62 @@
       border-radius: 3px;
     }
 
-    /* Login Container Styles */
-    .login-container {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+    .login-container, .profile-container {
       padding: 2rem;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       text-align: center;
-      margin: 0 auto;
-      display: block;
     }
 
-    .login-container h1 {
+    .login-container h1, .profile-container h2 {
       font-size: 1.8rem;
       color: var(--primary-color);
       margin-bottom: 1.5rem;
     }
 
-    .status {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background: rgba(0, 86, 179, 0.1);
-      border: 1px solid var(--border-color);
+    .status, .error-message, .success-message {
+      padding: 0.75rem;
       border-radius: 8px;
-      color: var(--text-primary);
       margin-bottom: 1.5rem;
       font-size: 0.9rem;
     }
 
+    .status {
+      background: rgba(29, 185, 84, 0.1);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .error-message {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .success-message {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
     .google-btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--secondary-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all var(--animation-timing);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.75rem;
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all var(--animation-timing);
       margin-bottom: 1.5rem;
     }
 
     .google-btn:hover:not(:disabled) {
-      background: #f4f4f9;
-      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+      background: #3a3a3a;
+      box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
     }
 
     .google-btn:active:not(:disabled) {
@@ -336,26 +293,6 @@
     .google-btn img {
       width: 20px;
       height: 20px;
-    }
-
-    .error-message {
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-    }
-
-    .success-message {
-      color: #10b981;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
     }
 
     .footer {
@@ -373,20 +310,6 @@
       text-decoration: underline;
     }
 
-    /* Profile Container Styles */
-    .profile-container {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      margin: 0 auto;
-      display: none;
-    }
-
     .profile-header {
       display: flex;
       align-items: center;
@@ -400,21 +323,6 @@
       border-radius: 50%;
       border: 2px solid var(--border-color);
       object-fit: cover;
-    }
-
-    .profile-info {
-      flex: 1;
-    }
-
-    .profile-info h2 {
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      margin-bottom: 0.5rem;
-    }
-
-    .profile-info p {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
     }
 
     .profile-field {
@@ -431,28 +339,26 @@
     .profile-field input {
       width: 100%;
       padding: 0.75rem;
-      background: #f9f9f9;
+      background: var(--background-color);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
-      font-family: inherit;
       font-size: 1rem;
       outline: none;
       transition: all var(--animation-timing);
     }
 
     .profile-field input:focus {
-      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+      box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
     }
 
     .update-btn, .logout-btn {
       width: 100%;
       padding: 0.75rem 1rem;
-      background: rgba(0, 86, 179, 0.1);
+      background: rgba(29, 185, 84, 0.1);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
-      font-family: inherit;
       font-size: 1rem;
       cursor: pointer;
       transition: all var(--animation-timing);
@@ -460,8 +366,8 @@
     }
 
     .update-btn:hover, .logout-btn:hover {
-      background: rgba(0, 86, 179, 0.2);
-      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+      background: rgba(29, 185, 84, 0.2);
+      box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
     }
 
     .update-btn:active, .logout-btn:active {
@@ -476,22 +382,6 @@
     .logout-btn:hover {
       background: rgba(239, 68, 68, 0.2);
       box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-    }
-
-    .google-btn.loading {
-      position: relative;
-      color: transparent;
-    }
-
-    .google-btn.loading::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #ffffff;
-      border-top: 2px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
     }
 
     @keyframes spin {
@@ -510,32 +400,20 @@
       }
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
-      :root {
-        --message-max-width: 90%;
-        --message-spacing: 1rem;
-        --container-padding: 1rem;
-      }
-
       .app-container {
-        padding: var(--container-padding);
+        padding: 1rem;
       }
 
       .chat-container {
-        height: calc(100vh - 2rem);
-        margin: 1rem;
+        height: calc(100vh - 3rem);
       }
 
       .chat-header {
         padding: 1rem;
       }
 
-      .header-content {
-        gap: 1rem;
-      }
-
-      .jarvis-logo {
+      .jarvis-logo img {
         width: 30px;
         height: 30px;
       }
@@ -551,23 +429,15 @@
     }
 
     @media (max-width: 640px) {
-      :root {
-        --message-max-width: 95%;
-        --message-spacing: 0.75rem;
-        --container-padding: 0.5rem;
-      }
-
       .app-container {
-        padding: var(--container-padding);
+        padding: 0.5rem;
       }
 
       .chat-container {
-        height: calc(100vh - 1rem);
-        margin: 0.5rem;
-        border-radius: 12px;
+        height: calc(100vh - 2rem);
       }
 
-      .header-info h1 {
+      .chat-header h1 {
         font-size: 1.2rem;
       }
 
@@ -580,45 +450,6 @@
         padding: 0.5rem;
       }
     }
-
-    @media (max-height: 600px) {
-      :root {
-        --container-padding: 0.5rem;
-      }
-
-      .chat-container {
-        height: calc(100vh - 1rem);
-      }
-
-      .chat-header {
-        padding: 0.75rem;
-      }
-
-      .jarvis-logo {
-        width: 30px;
-        height: 30px;
-      }
-
-      .input-container {
-        padding: 0.75rem;
-      }
-
-      .welcome-message {
-        padding: 1rem;
-        margin: 0.5rem 0;
-      }
-    }
-
-    /* Touch Device Optimizations */
-    @media (hover: none) {
-      #send-button:hover {
-        transform: none;
-      }
-
-      #send-button:active {
-        transform: scale(0.95);
-      }
-    }
   </style>
 </head>
 <body>
@@ -626,37 +457,33 @@
     <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
       <div class="chat-header">
-        <div class="header-content">
-          <div class="jarvis-logo">
-            <img src="https://via.placeholder.com/40" alt="Jarvis Logo">
-          </div>
-          <div class="header-info">
-            <h1>JARVIS AM.0</h1>
-            <div class="status-container">
-              <span class="status-dot"></span>
-              <span class="status" id="chat-status">SYSTEM ONLINE</span>
-            </div>
+        <div class="jarvis-logo">
+          <img src="data:image/jpeg;base64,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" alt="ConnexGrow Logo">
+        </div>
+        <div class="header-info">
+          <h1>ConnexGrow</h1>
+          <div class="status-container">
+            <span class="status-dot"></span>
+            <span class="status" id="chat-status">SYSTEM ONLINE</span>
           </div>
         </div>
       </div>
 
       <div class="chat-box" id="chat-box">
         <div class="welcome-message">
-          <h2>Welcome, I am JARVIS AM.0</h2>
+          <h2>Welcome, I am ConnexGrow</h2>
           <p>How may I assist you today?</p>
         </div>
       </div>
 
       <div class="input-container">
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="user-input"
-            placeholder="Enter command..."
-            autocomplete="off"
-            disabled
-          >
-        </div>
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Enter command..."
+          autocomplete="off"
+          disabled
+        >
         <button id="send-button" aria-label="Send message" disabled>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -796,7 +623,7 @@
 
           fetchProfile(user.uid);
           const welcomeMessage = document.querySelector('.welcome-message h2');
-          welcomeMessage.innerText = `Welcome ${user.displayName || 'User'}, I am JARVIS AM.0`;
+          welcomeMessage.innerText = `Welcome ${user.displayName || 'User'}, I am ConnexGrow`;
         } else {
           currentUser = null;
           console.log("User signed out");
