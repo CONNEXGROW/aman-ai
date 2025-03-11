@@ -6,12 +6,12 @@
   <title>JARVIS AM.0</title>
   <style>
     :root {
-      --primary-color: #00f2fe;
-      --secondary-color: #4facfe;
-      --background-dark: #1a1a1a;
-      --text-primary: #ffffff;
-      --text-secondary: #a0a0a0;
-      --glow-color: rgba(0, 242, 254, 0.5);
+      --primary-color: #0056b3;
+      --secondary-color: #f1f1f1;
+      --background-color: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #767676;
+      --border-color: #dddddd;
       --animation-timing: 0.3s;
       --message-max-width: 85%;
       --message-spacing: 1.5rem;
@@ -26,8 +26,8 @@
     }
 
     body {
-      font-family: 'Share Tech Mono', monospace;
-      background-color: var(--background-dark);
+      font-family: 'Arial', sans-serif;
+      background-color: var(--background-color);
       color: var(--text-primary);
       line-height: 1.5;
       overflow: hidden;
@@ -42,17 +42,6 @@
       align-items: center;
       min-height: 100vh;
       padding: var(--container-padding);
-      background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-    }
-
-    .power-circle {
-      position: absolute;
-      width: 100vh;
-      height: 100vh;
-      border: 2px solid var(--primary-color);
-      border-radius: 50%;
-      opacity: 0.1;
-      animation: pulse 4s infinite;
     }
 
     .chat-container {
@@ -60,72 +49,36 @@
       width: 100%;
       max-width: 900px;
       height: calc(100vh - 2rem);
-      background: rgba(26, 26, 26, 0.95);
-      border: 1px solid var(--primary-color);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      display: flex;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: none;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
-      display: none;
     }
 
     .chat-header {
       padding: 1.5rem;
-      background: linear-gradient(180deg, rgba(0,242,254,0.1) 0%, rgba(0,242,254,0) 100%);
-      border-bottom: 1px solid var(--primary-color);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .header-content {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
 
     .jarvis-logo {
-      position: relative;
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       flex-shrink: 0;
     }
 
-    .arc-reactor {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    .reactor-core {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 30px;
-      height: 30px;
-      background: var(--primary-color);
-      border-radius: 50%;
-      box-shadow: 0 0 20px var(--glow-color);
-      animation: glow 2s ease-in-out infinite;
-    }
-
-    .reactor-ring {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid var(--primary-color);
-      border-radius: 50%;
-      animation: spin 3s linear infinite;
-    }
-
     .header-info h1 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-size: 1.5rem;
       color: var(--primary-color);
-      text-shadow: 0 0 10px var(--glow-color);
       margin-bottom: 0.5rem;
     }
 
@@ -140,35 +93,6 @@
       height: 8px;
       background-color: var(--primary-color);
       border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    .system-stats {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .stat {
-      flex: 1;
-    }
-
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.25rem;
-    }
-
-    .stat-bar {
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .stat-fill {
-      height: 100%;
-      background: var(--primary-color);
-      transition: width 1s ease;
     }
 
     .chat-box {
@@ -187,15 +111,15 @@
       text-align: center;
       margin: 2rem 0;
       padding: 2rem;
-      background: rgba(0, 242, 254, 0.05);
+      background: rgba(0, 86, 179, 0.1);
       border-radius: 12px;
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--border-color);
     }
 
     .welcome-message h2 {
       color: var(--primary-color);
       margin-bottom: 1rem;
-      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-size: 1.2rem;
     }
 
     .welcome-message p {
@@ -221,18 +145,18 @@
       word-wrap: break-word;
       white-space: pre-wrap;
       animation: fadeIn 0.3s ease-out;
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--border-color);
     }
 
     .user {
-      background: rgba(0,242,254,0.1);
+      background: rgba(0, 86, 179, 0.1);
       margin-left: auto;
       border-top-right-radius: 4px;
       text-align: right;
     }
 
     .bot {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.8);
       margin-right: auto;
       border-top-left-radius: 4px;
       text-align: left;
@@ -249,20 +173,20 @@
 
     .user::before {
       right: -8px;
-      border-left-color: var(--primary-color);
-      border-top-color: var(--primary-color);
+      border-left-color: var(--border-color);
+      border-top-color: var(--border-color);
     }
 
     .bot::before {
       left: -8px;
-      border-right-color: var(--primary-color);
-      border-top-color: var(--primary-color);
+      border-right-color: var(--border-color);
+      border-top-color: var(--border-color);
     }
 
     .input-container {
       padding: 1.5rem;
-      background: rgba(0,0,0,0.3);
-      border-top: 1px solid var(--primary-color);
+      background: #f9f9f9;
+      border-top: 1px solid var(--border-color);
       display: flex;
       gap: 1rem;
     }
@@ -275,8 +199,8 @@
     #user-input {
       width: 100%;
       padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--primary-color);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
       font-family: inherit;
@@ -289,15 +213,7 @@
     }
 
     #user-input:focus {
-      box-shadow: 0 0 15px var(--glow-color);
-    }
-
-    .input-effects {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      border-radius: 8px;
-      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
     }
 
     #send-button {
@@ -307,7 +223,7 @@
       border: none;
       border-radius: 50%;
       background: var(--primary-color);
-      color: var(--background-dark);
+      color: #ffffff;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -318,7 +234,7 @@
     }
 
     #send-button:hover {
-      transform: scale(1.1);
+      background: #004080;
     }
 
     #send-button:active {
@@ -331,22 +247,10 @@
       z-index: 1;
     }
 
-    .button-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, var(--primary-color) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity var(--animation-timing);
-    }
-
-    #send-button:hover .button-glow {
-      opacity: 0.5;
-    }
-
     .loading {
       width: 20px;
       height: 20px;
-      border: 2px solid var(--background-dark);
+      border: 2px solid #ffffff;
       border-top: 2px solid transparent;
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -361,7 +265,7 @@
     }
 
     .chat-box::-webkit-scrollbar-thumb {
-      background-color: var(--primary-color);
+      background-color: var(--border-color);
       border-radius: 3px;
     }
 
@@ -370,12 +274,11 @@
       position: relative;
       width: 100%;
       max-width: 400px;
-      background: rgba(26, 26, 26, 0.95);
-      border: 1px solid var(--primary-color);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       text-align: center;
       margin: 0 auto;
       display: block;
@@ -384,15 +287,14 @@
     .login-container h1 {
       font-size: 1.8rem;
       color: var(--primary-color);
-      text-shadow: 0 0 10px var(--glow-color);
       margin-bottom: 1.5rem;
     }
 
     .status {
       display: inline-block;
       padding: 0.5rem 1rem;
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid var(--primary-color);
+      background: rgba(0, 86, 179, 0.1);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
       margin-bottom: 1.5rem;
@@ -406,8 +308,8 @@
       gap: 0.75rem;
       width: 100%;
       padding: 0.75rem 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--primary-color);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
       font-family: inherit;
@@ -418,8 +320,8 @@
     }
 
     .google-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px var(--glow-color);
+      background: #f4f4f9;
+      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
     }
 
     .google-btn:active:not(:disabled) {
@@ -476,12 +378,11 @@
       position: relative;
       width: 100%;
       max-width: 400px;
-      background: rgba(26, 26, 26, 0.95);
-      border: 1px solid var(--primary-color);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       margin: 0 auto;
       display: none;
     }
@@ -497,7 +398,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      border: 2px solid var(--primary-color);
+      border: 2px solid var(--border-color);
       object-fit: cover;
     }
 
@@ -530,8 +431,8 @@
     .profile-field input {
       width: 100%;
       padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--primary-color);
+      background: #f9f9f9;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
       font-family: inherit;
@@ -541,14 +442,14 @@
     }
 
     .profile-field input:focus {
-      box-shadow: 0 0 15px var(--glow-color);
+      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
     }
 
     .update-btn, .logout-btn {
       width: 100%;
       padding: 0.75rem 1rem;
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid var(--primary-color);
+      background: rgba(0, 86, 179, 0.1);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-primary);
       font-family: inherit;
@@ -559,8 +460,8 @@
     }
 
     .update-btn:hover, .logout-btn:hover {
-      background: rgba(0, 242, 254, 0.2);
-      box-shadow: 0 0 15px var(--glow-color);
+      background: rgba(0, 86, 179, 0.2);
+      box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
     }
 
     .update-btn:active, .logout-btn:active {
@@ -574,7 +475,7 @@
 
     .logout-btn:hover {
       background: rgba(239, 68, 68, 0.2);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
     }
 
     .google-btn.loading {
@@ -587,30 +488,15 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      border: 2px solid var(--background-dark);
+      border: 2px solid #ffffff;
       border-top: 2px solid transparent;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
     @keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 20px var(--glow-color); }
-      50% { box-shadow: 0 0 40px var(--glow-color); }
     }
 
     @keyframes fadeIn {
@@ -650,12 +536,8 @@
       }
 
       .jarvis-logo {
-        width: 50px;
-        height: 50px;
-      }
-
-      .system-stats {
-        gap: 1rem;
+        width: 30px;
+        height: 30px;
       }
 
       .input-container {
@@ -685,17 +567,8 @@
         border-radius: 12px;
       }
 
-      .power-circle {
-        display: none;
-      }
-
       .header-info h1 {
-        font-size: 1.5rem;
-      }
-
-      .system-stats {
-        flex-direction: column;
-        gap: 0.5rem;
+        font-size: 1.2rem;
       }
 
       .message {
@@ -722,8 +595,8 @@
       }
 
       .jarvis-logo {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
       }
 
       .input-container {
@@ -745,46 +618,23 @@
       #send-button:active {
         transform: scale(0.95);
       }
-
-      .button-glow {
-        display: none;
-      }
     }
   </style>
 </head>
 <body>
   <div class="app-container">
-    <div class="power-circle"></div>
-
     <!-- Chat Container -->
     <div class="chat-container" id="chat-container">
       <div class="chat-header">
         <div class="header-content">
           <div class="jarvis-logo">
-            <div class="arc-reactor">
-              <div class="reactor-core"></div>
-              <div class="reactor-ring"></div>
-            </div>
+            <img src="https://via.placeholder.com/40" alt="Jarvis Logo">
           </div>
           <div class="header-info">
             <h1>JARVIS AM.0</h1>
             <div class="status-container">
               <span class="status-dot"></span>
               <span class="status" id="chat-status">SYSTEM ONLINE</span>
-            </div>
-          </div>
-        </div>
-        <div class="system-stats">
-          <div class="stat">
-            <span class="stat-label">CPU</span>
-            <div class="stat-bar">
-              <div class="stat-fill" style="width: 75%"></div>
-            </div>
-          </div>
-          <div class="stat">
-            <span class="stat-label">MEMORY</span>
-            <div class="stat-bar">
-              <div class="stat-fill" style="width: 65%"></div>
             </div>
           </div>
         </div>
@@ -806,10 +656,8 @@
             autocomplete="off"
             disabled
           >
-          <div class="input-effects"></div>
         </div>
         <button id="send-button" aria-label="Send message" disabled>
-          <div class="button-glow"></div>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -1115,7 +963,7 @@
 
         messageGroup.appendChild(messageElement);
         chatBox.appendChild(messageGroup);
-        
+
         requestAnimationFrame(() => {
           chatBox.scrollTop = chatBox.scrollHeight;
         });
@@ -1130,7 +978,6 @@
           sendButton.innerHTML = '<div class="loading"></div>';
         } else {
           sendButton.innerHTML = `
-            <div class="button-glow"></div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
