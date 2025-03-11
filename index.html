@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>JARVIS AM.0</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
     :root {
       --primary-color: #00f2fe;
       --secondary-color: #4facfe;
@@ -366,6 +364,234 @@
       border-radius: 3px;
     }
 
+    /* Login Container Styles */
+    .login-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid var(--primary-color);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+      text-align: center;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .login-container h1 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--glow-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all var(--animation-timing);
+      margin-bottom: 1.5rem;
+    }
+
+    .google-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px var(--glow-color);
+    }
+
+    .google-btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .google-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .error-message {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .success-message {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Profile Container Styles */
+    .profile-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid var(--primary-color);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
+      margin: 0 auto;
+      display: none;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      object-fit: cover;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-info h2 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-info p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .profile-field {
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-field label {
+      display: block;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .profile-field input {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: all var(--animation-timing);
+    }
+
+    .profile-field input:focus {
+      box-shadow: 0 0 15px var(--glow-color);
+    }
+
+    .update-btn, .logout-btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all var(--animation-timing);
+      margin-bottom: 1rem;
+    }
+
+    .update-btn:hover, .logout-btn:hover {
+      background: rgba(0, 242, 254, 0.2);
+      box-shadow: 0 0 15px var(--glow-color);
+    }
+
+    .update-btn:active, .logout-btn:active {
+      transform: scale(0.98);
+    }
+
+    .logout-btn {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    }
+
+    .google-btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .google-btn.loading::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--background-dark);
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
@@ -394,6 +620,131 @@
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      :root {
+        --message-max-width: 90%;
+        --message-spacing: 1rem;
+        --container-padding: 1.5rem;
+      }
+
+      .app-container {
+        padding: var(--container-padding);
+      }
+
+      .chat-container, .login-container, .profile-container {
+        border-radius: 12px;
+      }
+
+      .chat-container {
+        height: calc(100vh - var(--container-padding) * 2 - 60px);
+      }
+
+      .chat-header {
+        padding: 1rem;
+      }
+
+      .header-content {
+        gap: 1rem;
+      }
+
+      .jarvis-logo {
+        width: 50px;
+        height: 50px;
+      }
+
+      .system-stats {
+        gap: 1rem;
+      }
+
+      .input-container {
+        padding: 1rem;
+      }
+
+      .welcome-message {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --message-max-width: 95%;
+        --message-spacing: 0.75rem;
+        --container-padding: 0.75rem;
+      }
+
+      .app-container {
+        padding: var(--container-padding);
+      }
+
+      .chat-container {
+        height: calc(100vh - var(--container-padding) * 2 - 60px);
+        border-radius: 8px;
+      }
+
+      .power-circle {
+        display: none;
+      }
+
+      .header-info h1 {
+        font-size: 1.5rem;
+      }
+
+      .system-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .message {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-height: 600px) {
+      :root {
+        --container-padding: 0.5rem;
+      }
+
+      .chat-container {
+        height: calc(100vh - var(--container-padding) * 2 - 60px);
+      }
+
+      .chat-header {
+        padding: 0.75rem;
+      }
+
+      .jarvis-logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .input-container {
+        padding: 0.75rem;
+      }
+
+      .welcome-message {
+        padding: 1rem;
+        margin: 0.5rem 0;
+      }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: none) {
+      #send-button:hover {
+        transform: none;
+      }
+
+      #send-button:active {
+        transform: scale(0.95);
+      }
+
+      .button-glow {
+        display: none;
       }
     }
   </style>
